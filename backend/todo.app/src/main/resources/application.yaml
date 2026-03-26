@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application.name: todo.app
+  datasource:
+    url: jdbc:mysql://localhost:3306/tododb
+    username:
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+              - email
+              - profile
+
+jwt:
+  secret: your-super-secret-key
