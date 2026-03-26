@@ -1,26 +1,35 @@
-package com.fsd.todo.app.controllers;
+package com.tasktracker.project;
 
+import com.tasktracker.auth.CustomUserPrincipal;
+import com.tasktracker.project.dto.*;
+import com.tasktracker.user.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
+@RequiredArgsConstructor
 public class ProjectController {
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
-    public String createProject() {
-        return "Project Created";
-    }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    private final ProjectService projectService;
+
     @GetMapping
-    public String getProjects() {
-        return "List of Projects";
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR', 'VIEWER')")
+    public List<ProjectResponse> getProjects() {
+        return projectService.getAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{id}")
-    public String deleteProject() {
-        return "Deleted";
+    @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    public ProjectResponse createProject(
+            @RequestBody ProjectRequest request,
+            @AuthenticationPrincipal CustomUserPrincipal principal
+    ) {
+        User user = principal.getUser();
+        return projectService.create(request, user);
     }
 }
