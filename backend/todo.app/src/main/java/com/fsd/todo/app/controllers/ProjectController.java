@@ -1,8 +1,10 @@
-package com.tasktracker.project;
+package com.fsd.todo.app.controllers;
 
-import com.tasktracker.auth.CustomUserPrincipal;
-import com.tasktracker.project.dto.*;
-import com.tasktracker.user.User;
+import com.fsd.todo.app.auth.CustomUserPrincipal;
+import com.fsd.todo.app.dto.ProjectRequest;
+import com.fsd.todo.app.dto.ProjectResponse;
+import com.fsd.todo.app.entities.User;
+import com.fsd.todo.app.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

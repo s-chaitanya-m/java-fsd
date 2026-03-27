@@ -1,11 +1,8 @@
 import { useState } from "react";
+import { emptyTaskForm } from "../constants/helpers";
 
 const TaskForm = ({ onSubmit }) => {
-  const [form, setForm] = useState({
-    description: "",
-    dueDate: "",
-    ownerId: "",
-  });
+  const [form, setForm] = useState(emptyTaskForm);
 
   const handleChange = (e) => {
     setForm({
@@ -27,11 +24,7 @@ const TaskForm = ({ onSubmit }) => {
         onChange={handleChange}
       />
 
-      <input
-        type="date"
-        name="dueDate"
-        onChange={handleChange}
-      />
+      <input type="date" name="dueDate" onChange={handleChange} />
 
       <input
         name="ownerId"

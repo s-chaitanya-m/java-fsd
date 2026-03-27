@@ -1,5 +1,6 @@
-package com.tasktracker.task;
+package com.fsd.todo.app.repositories;
 
+import com.fsd.todo.app.entities.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,7 +1,10 @@
-package com.tasktracker.project;
+package com.fsd.todo.app.service;
 
-import com.tasktracker.project.dto.*;
-import com.tasktracker.user.User;
+import com.fsd.todo.app.dto.ProjectRequest;
+import com.fsd.todo.app.dto.ProjectResponse;
+import com.fsd.todo.app.entities.Project;
+import com.fsd.todo.app.entities.User;
+import com.fsd.todo.app.repositories.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

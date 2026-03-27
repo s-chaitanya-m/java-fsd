@@ -1,7 +1,5 @@
-package com.tasktracker.task;
+package com.fsd.todo.app.entities;
 
-import com.tasktracker.project.Project;
-import com.tasktracker.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

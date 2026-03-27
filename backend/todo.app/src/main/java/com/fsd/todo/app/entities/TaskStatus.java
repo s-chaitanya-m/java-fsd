@@ -1,4 +1,4 @@
-package com.tasktracker.task;
+package com.fsd.todo.app.entities;
 
 public enum TaskStatus {
     NEW,

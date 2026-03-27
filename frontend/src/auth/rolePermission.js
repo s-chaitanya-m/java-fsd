@@ -22,6 +22,7 @@ export const ROLE_PERMISSIONS = {
     ["TASK", "CREATE"],
     ["TASK", "UPDATE"],
     ["TASK", "ASSIGN"],
+    ["TASK", "COMPLETE"],
   ],
 
   VIEWER: [

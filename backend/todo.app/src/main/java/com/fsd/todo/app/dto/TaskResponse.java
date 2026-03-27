@@ -1,6 +1,6 @@
-package com.tasktracker.task.dto;
+package com.fsd.todo.app.dto;
 
-import com.tasktracker.task.TaskStatus;
+import com.fsd.todo.app.entities.TaskStatus;
 import lombok.Builder;
 import lombok.Data;
 

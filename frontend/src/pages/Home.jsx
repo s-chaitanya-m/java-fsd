@@ -2,23 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth/AuthContext";
 // import { tasks } from "../constants/taskData";
 import usePermission from "../hooks/usePermission";
-import { deleteTask, getTask, getTasks, getUserTasks, updateTaskStatus } from "../api/task";
+import {
+  deleteTask,
+  getTask,
+  getTasks,
+  getUserTasks,
+  updateTaskStatus,
+} from "../api/task";
 
 function Home() {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
 
-  const fetchTasks = async()=>{
+  const fetchTasks = async () => {
     try {
-      const data = await getUserTasks()
-      setTasks(data)
+      const data = await getUserTasks();
+      setTasks(data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    fetchTasks()
-  },[])
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const { user, logout } = useContext(AuthContext);
   const { can } = usePermission();
@@ -39,9 +45,24 @@ function Home() {
             <td>{t.due_on}</td>
             <td>{t.status}</td>
             <td>
-              <button onClick={()=>getTask(t.id)} disabled={!can("TASK", "READ")}>V</button>
-              <button onClick={()=>updateTaskStatus(t.id, 'Completed')} disabled={!can("TASK", "UPDATE")}>E</button>
-              <button onClick={()=>deleteTask(t.id)} disabled={!can("TASK", "DELETE")}>D</button>
+              <button
+                onClick={() => getTask(t.id)}
+                disabled={!can("TASK", "READ")}
+              >
+                V
+              </button>
+              <button
+                onClick={() => updateTaskStatus(t.id, "COMPLETED")}
+                disabled={!can("TASK", "UPDATE")}
+              >
+                E
+              </button>
+              <button
+                onClick={() => deleteTask(t.id)}
+                disabled={!can("TASK", "DELETE")}
+              >
+                D
+              </button>
             </td>
           </tr>
         ))}

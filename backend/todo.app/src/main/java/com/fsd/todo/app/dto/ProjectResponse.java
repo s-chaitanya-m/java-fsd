@@ -1,4 +1,4 @@
-package com.tasktracker.project.dto;
+package com.fsd.todo.app.dto;
 
 import lombok.Builder;
 import lombok.Data;
