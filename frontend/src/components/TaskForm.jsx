@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { emptyTaskForm } from "../constants/helpers";
+import { getUsers } from "../api/users";
 
 const TaskForm = ({ onSubmit }) => {
   const [form, setForm] = useState(emptyTaskForm);
@@ -14,8 +15,6 @@ const TaskForm = ({ onSubmit }) => {
   useEffect(() => {
     fetchUsers();
   }, []);
-
-  
 
   const handleChange = (e) => {
     setForm({
@@ -40,11 +39,7 @@ const TaskForm = ({ onSubmit }) => {
         onChange={handleChange}
       />
 
-      <input
-        type="date"
-        name="dueDate"
-        onChange={handleChange}
-      />
+      <input type="date" name="dueDate" onChange={handleChange} />
 
       {/* ✅ User Dropdown */}
       <select name="ownerId" onChange={handleChange}>

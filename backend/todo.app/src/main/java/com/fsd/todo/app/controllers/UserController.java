@@ -1,6 +1,10 @@
 package com.fsd.todo.app.controllers;
 
+import com.fsd.todo.app.dto.UserResponse;
+import com.fsd.todo.app.entities.User;
+import com.fsd.todo.app.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +18,7 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
-    public List<UserResponse> getUsers() {
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 }
