@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     var config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5173"));
+                    config.setAllowedOrigins(List.of("https://d2xv635dtqzf33.cloudfront.net"));
                     config.setAllowedMethods(List.of("*"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .oauth2Login( oauth -> oauth
                                 .userInfoEndpoint(userInfo -> userInfo
                                         .userService(customOAuth2UserService))
-                        .defaultSuccessUrl("http://localhost:5173", true)
+                        .defaultSuccessUrl("https://d2xv635dtqzf33.cloudfront.net", true)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
