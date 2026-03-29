@@ -1,0 +1,37 @@
+name: Push to ECR
+
+on:
+  push:
+    branches: [qa]
+
+permissions:
+  id-token: write # REQUIRED for OIDC
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::665871828762:role/github-actions-role
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # ---- BACKEND ----
+      - name: Build & Push Backend
+        run: |
+          IMAGE_TAG=$(date +%s)
+          BE_ECR="665871828762.dkr.ecr.us-east-1.amazonaws.com/todo-backend"
+
+          docker build -t $BE_ECR:$IMAGE_TAG ./backend/todo.app
+          docker push $BE_ECR:$IMAGE_TAG
+
+          echo "IMAGE_URI=$ECR_URL:$IMAGE_TAG" >> $GITHUB_ENV
