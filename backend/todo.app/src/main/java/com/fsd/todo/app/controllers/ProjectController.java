@@ -34,4 +34,19 @@ public class ProjectController {
         User user = principal.getUser();
         return projectService.create(request, user);
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    public ProjectResponse updateProject(
+            @PathVariable Long id,
+            @RequestBody ProjectRequest request
+    ) {
+        return projectService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteProject(@PathVariable Long id) {
+        projectService.delete(id);
+    }
 }

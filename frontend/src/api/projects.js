@@ -15,8 +15,8 @@ export const createProject = async (data) => {
   return res.data;
 };
 
-export const updateProject = async (data) => {
-  const res = await api.put("/projects", data);
+export const updateProject = async (id, data) => {
+  const res = await api.put(`/projects/${id}`, data);
   return res.data;
 };
 

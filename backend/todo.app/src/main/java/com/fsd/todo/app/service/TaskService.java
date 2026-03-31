@@ -54,6 +54,24 @@ public class TaskService {
         return toResponse(taskRepository.save(task));
     }
 
+    public TaskResponse update(Long id, TaskRequest req) {
+        Task task = taskRepository.findById(id).orElseThrow();
+
+        task.setDescription(req.getDescription());
+        task.setDueDate(req.getDueDate());
+
+        if (req.getOwnerId() != null) {
+            User owner = userRepository.findById(req.getOwnerId()).orElseThrow();
+            task.setOwner(owner);
+        }
+
+        return toResponse(taskRepository.save(task));
+    }
+
+    public void delete(Long id) {
+        taskRepository.deleteById(id);
+    }
+
     private TaskResponse toResponse(Task t) {
         return TaskResponse.builder()
                 .id(t.getId())

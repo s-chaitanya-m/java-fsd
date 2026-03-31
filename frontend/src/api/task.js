@@ -19,3 +19,6 @@ export const updateTaskStatus = (id, status) =>
   api.patch(`/tasks/${id}/status`, null, {
     params: { status },
   });
+
+export const updateTask = (id, data) =>
+  api.put(`/tasks/${id}`, data);

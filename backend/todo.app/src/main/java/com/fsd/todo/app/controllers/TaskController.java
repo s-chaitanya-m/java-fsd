@@ -44,4 +44,19 @@ public class TaskController {
     ) {
         return taskService.updateStatus(id, status);
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    public TaskResponse updateTask(
+            @PathVariable Long id,
+            @RequestBody TaskRequest request
+    ) {
+        return taskService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN', 'CREATOR')")
+    public void deleteTask(@PathVariable Long id) {
+        taskService.delete(id);
+    }
 }
