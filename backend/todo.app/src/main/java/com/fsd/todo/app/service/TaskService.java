@@ -29,6 +29,13 @@ public class TaskService {
                 .toList();
     }
 
+    public List<TaskResponse> getMyTasks(User user) {
+        return taskRepository.findByOwnerId(user.getId())
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
     public TaskResponse create(TaskRequest req, User creator) {
 
         Project project = projectRepository.findById(req.getProjectId())

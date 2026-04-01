@@ -64,7 +64,7 @@ const ProjectPage = () => {
           {projects.map((p) => (
             <tr key={p.id}>
               <td>{p.name}</td>
-              <td>{p.end_date}</td>
+              <td>{p.endDate}</td>
               <td>{p.owner}</td>
               <td>
                 <button onClick={() => navigate(`/projects/${p.id}`)}>V</button>

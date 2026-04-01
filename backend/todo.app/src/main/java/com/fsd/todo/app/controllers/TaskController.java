@@ -20,6 +20,16 @@ public class TaskController {
 
     private final TaskService taskService;
 
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public List<TaskResponse> getMyTasks(
+            @AuthenticationPrincipal CustomUserPrincipal principal
+    ) {
+        User user = principal.getUser();
+        return taskService.getMyTasks(user);
+    }
+
+
     @GetMapping("/project/{projectId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR', 'VIEWER')")
     public List<TaskResponse> getTasks(@PathVariable Long projectId) {

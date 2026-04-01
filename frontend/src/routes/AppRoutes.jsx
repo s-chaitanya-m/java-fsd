@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import ProjectPage from "../pages/ProjectPage";
 import ProjectDetails from "../pages/ProjectDetails";
+import UserPage from "../pages/UserPage";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -22,6 +23,14 @@ const AppRoutes = () => (
         element={
           <ProtectedRoute>
             <ProjectPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <UserPage />
           </ProtectedRoute>
         }
       />

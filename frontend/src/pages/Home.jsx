@@ -15,8 +15,8 @@ function Home() {
 
   const fetchTasks = async () => {
     try {
-      const data = await getUserTasks();
-      setTasks(data);
+      const res = await getUserTasks();
+      setTasks(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -41,8 +41,8 @@ function Home() {
         </tr>
         {tasks.map((t) => (
           <tr key={t.id}>
-            <td>{t.name}</td>
-            <td>{t.due_on}</td>
+            <td>{t.description}</td>
+            <td>{t.dueDate}</td>
             <td>{t.status}</td>
             <td>
               <button

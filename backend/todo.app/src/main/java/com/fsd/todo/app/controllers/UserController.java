@@ -1,6 +1,7 @@
 package com.fsd.todo.app.controllers;
 
 import com.fsd.todo.app.dto.UserResponse;
+import com.fsd.todo.app.entities.Role;
 import com.fsd.todo.app.entities.User;
 import com.fsd.todo.app.repositories.UserRepository;
 import com.fsd.todo.app.service.UserService;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")

@@ -1,5 +1,6 @@
 package com.fsd.todo.app.service;
 
+import com.fsd.todo.app.entities.Role;
 import com.fsd.todo.app.entities.User;
 import com.fsd.todo.app.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
