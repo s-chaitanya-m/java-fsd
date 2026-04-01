@@ -4,6 +4,8 @@ import Home from "../pages/Home";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import ProjectPage from "../pages/ProjectPage";
 import ProjectDetails from "../pages/ProjectDetails";
+import AdminRoute from "../auth/AdminRoute";
+import AdminPanel from "../pages/AdminPanel";
 import UserPage from "../pages/UserPage";
 
 const AppRoutes = () => (
@@ -39,6 +41,16 @@ const AppRoutes = () => (
         element={
           <ProtectedRoute>
             <ProjectDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminRoute>
+              <AdminPanel />
+            </AdminRoute>
           </ProtectedRoute>
         }
       />
