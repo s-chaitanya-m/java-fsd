@@ -6,8 +6,8 @@ export const getProjects = async () => {
 };
 
 export const getProject = async (id) => {
-  const res = await api.get(`/project/${id}`);
-  return res.data;
+  const res = await api.get(`/projects/${id}`);
+  return res;
 };
 
 export const createProject = async (data) => {
@@ -21,6 +21,6 @@ export const updateProject = async (id, data) => {
 };
 
 export const deleteProject = async (id) => {
-  const res = await api.delete(`/project/${id}`);
+  const res = await api.delete(`/projects/${id}`);
   return res.data;
 };

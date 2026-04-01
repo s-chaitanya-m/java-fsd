@@ -25,6 +25,12 @@ public class ProjectController {
         return projectService.getAll();
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR', 'VIEWER')")
+    public ProjectResponse getProjects(@PathVariable Long id) {
+        return projectService.getProjectbyId(id);
+    }
+
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
     public ProjectResponse createProject(

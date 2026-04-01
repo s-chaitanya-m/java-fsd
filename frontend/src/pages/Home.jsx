@@ -45,24 +45,14 @@ function Home() {
             <td>{t.dueDate}</td>
             <td>{t.status}</td>
             <td>
-              <button
-                onClick={() => getTask(t.id)}
-                disabled={!can("TASK", "READ")}
-              >
-                V
-              </button>
-              <button
-                onClick={() => updateTaskStatus(t.id, "COMPLETED")}
-                disabled={!can("TASK", "UPDATE")}
-              >
-                E
-              </button>
-              <button
-                onClick={() => deleteTask(t.id)}
-                disabled={!can("TASK", "DELETE")}
-              >
-                D
-              </button>
+              {can("TASK", "COMPLETE") && t.status !== "COMPLETED" && (
+                <button onClick={() => updateTaskStatus(t.id, "COMPLETED")}>
+                  Mark Complete
+                </button>
+              )}
+              {can("TASK", "DELETE") && (
+                <button onClick={() => deleteTask(t.id)}>D</button>
+              )}
             </td>
           </tr>
         ))}

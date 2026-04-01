@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getTasks, createTask, updateTaskStatus } from "../api/task";
+import {
+  getTasks,
+  createTask,
+  updateTaskStatus,
+  updateTask,
+  deleteTask,
+} from "../api/task";
 import TaskForm from "../components/TaskForm";
 import usePermission from "../hooks/usePermission";
+import { getProject } from "../api/projects";
 
 const ProjectDetails = () => {
   const { projectId } = useParams();
   const [tasks, setTasks] = useState([]);
+  const [project, setProject] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
 
@@ -16,9 +24,14 @@ const ProjectDetails = () => {
     const res = await getTasks(projectId);
     setTasks(res.data);
   };
+  const fetchProject = async () => {
+    const res = await getProject(projectId);
+    setProject(res.data);
+  };
 
   useEffect(() => {
     fetchTasks();
+    fetchProject();
   }, []);
 
   const handleCreate = async (form) => {
@@ -49,8 +62,8 @@ const ProjectDetails = () => {
 
   return (
     <div>
-      <h2>Tasks</h2>
-
+      <h2>{project?.name}</h2>
+      <p>{project?.description}</p>
       {can("TASK", "CREATE") && (
         <button onClick={() => setShowForm(true)}>Create Task</button>
       )}
@@ -67,7 +80,7 @@ const ProjectDetails = () => {
         {tasks.map((t) => (
           <li key={t.id}>
             {t.description} - {t.status}
-            {can("TASK", "COMPLETE") && (
+            {can("TASK", "COMPLETE") && t.status !== "COMPLETED" && (
               <button onClick={() => handleStatusChange(t.id, "COMPLETED")}>
                 Mark Complete
               </button>
@@ -77,16 +90,11 @@ const ProjectDetails = () => {
                 Start
               </button>
             )}
-            {can('TASK', 'UPDATE') && (
-              <button onClick={() => setEditingTask(t)}>
-                Edit
-              </button>
+            {can("TASK", "UPDATE") && (
+              <button onClick={() => setEditingTask(t)}>Edit</button>
             )}
-
-            {can('TASK', 'DELETE') && (
-              <button onClick={() => handleDeleteTask(t.id)}>
-                Delete
-              </button>
+            {can("TASK", "DELETE") && (
+              <button onClick={() => handleDeleteTask(t.id)}>Delete</button>
             )}
           </li>
         ))}

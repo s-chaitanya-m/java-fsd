@@ -1,7 +1,8 @@
-import { useAuth } from "../auth/AuthContext";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 const AdminRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user } = useContext(AuthContext);
 
   if (user?.role !== "ADMIN") {
     return <div>Access Denied</div>;

@@ -22,6 +22,10 @@ public class ProjectService {
                 .toList();
     }
 
+    public ProjectResponse getProjectbyId(Long id) {
+        return toResponse(projectRepository.findById(id).orElseThrow());
+    }
+
     public ProjectResponse create(ProjectRequest request, User user) {
         Project project = Project.builder()
                 .name(request.getName())

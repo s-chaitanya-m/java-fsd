@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 const ProjectPage = () => {
   const [projects, setProjects] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
 
   const { can } = usePermission();
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const ProjectPage = () => {
 
   const handleUpdateProject = async (id, data) => {
     await updateProject(id, data);
-    setEditingTask(null);
+    setEditingProject(null);
     fetchProjects();
   };
 
@@ -53,13 +54,8 @@ const ProjectPage = () => {
     await deleteProject(id);
     fetchProjects();
   };
+  console.log(editingProject);
 
-  // const deleteProject = async () => {
-  //   await api.delete("/projects/1");
-  // };
-  // const getProjects = async () => {
-  //   await api.get("/projects");
-  // };
   return (
     <>
       <h2>Projects</h2>
@@ -75,35 +71,37 @@ const ProjectPage = () => {
       )}
       <div>
         <table>
-          <tr>
-            <th>Project</th>
-            <th>End Date</th>
-            <th>Owner</th>
-          </tr>
-          {projects.map((p) => (
-            <tr key={p.id}>
-              <td>{p.name}</td>
-              <td>{p.endDate}</td>
-              <td>{p.owner}</td>
-              <td>
-                <button onClick={() => navigate(`/projects/${p.id}`)}>
-                  Open
-                </button>
-
-                {can("PROJECT", "UPDATE") && (
-                  <button onClick={() => setEditingProject(p)}>
-                    Edit
-                  </button>
-                )}
-
-                {can("PROJECT", "DELETE") && (
-                  <button onClick={() => handleDeleteProject(p.id)}>
-                    Delete
-                  </button>
-                )}
-              </td>
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>End Date</th>
+              <th>Owner</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {projects.map((p) => (
+              <tr key={p.id}>
+                <td>{p.name}</td>
+                <td>{p.endDate}</td>
+                <td>{p.owner}</td>
+                <td>
+                  <button onClick={() => navigate(`/projects/${p.id}`)}>
+                    Open
+                  </button>
+
+                  {can("PROJECT", "UPDATE") && (
+                    <button onClick={() => setEditingProject(p)}>Edit</button>
+                  )}
+
+                  {can("PROJECT", "DELETE") && (
+                    <button onClick={() => handleDeleteProject(p.id)}>
+                      Delete
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </>
