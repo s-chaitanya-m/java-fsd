@@ -7,9 +7,11 @@ import ProjectDetails from "../pages/ProjectDetails";
 import AdminRoute from "../auth/AdminRoute";
 import AdminPanel from "../pages/AdminPanel";
 import UserPage from "../pages/UserPage";
+import Navbar from "../components/Navbar";
 
 const AppRoutes = () => (
   <BrowserRouter>
+  <Navbar/>
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route
