@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { emptyTaskForm } from "../constants/helpers";
 import { getUsers } from "../api/users";
 
-const TaskForm = ({ onSubmit }) => {
-  const [form, setForm] = useState(emptyTaskForm);
+const TaskForm = ({ onSubmit, initialData=emptyTaskForm }) => {
+  const [form, setForm] = useState(initialData);
 
   const [users, setUsers] = useState([]);
 

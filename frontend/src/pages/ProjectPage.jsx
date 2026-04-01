@@ -7,6 +7,7 @@ import {
   deleteProject,
   getProject,
   getProjects,
+  updateProject,
 } from "../api/projects";
 import ProjectForm from "../components/ProjectForm";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,18 @@ const ProjectPage = () => {
     }
   };
 
+  const handleUpdateProject = async (id, data) => {
+    await updateProject(id, data);
+    setEditingTask(null);
+    fetchProjects();
+  };
+
+  const handleDeleteProject = async (id) => {
+    if (!window.confirm("Delete project?")) return;
+    await deleteProject(id);
+    fetchProjects();
+  };
+
   // const deleteProject = async () => {
   //   await api.delete("/projects/1");
   // };
@@ -54,6 +67,12 @@ const ProjectPage = () => {
         <button onClick={() => setShowForm(true)}>Create Project</button>
       )}
       {showForm && <ProjectForm onSubmit={handleCreate} />}
+      {editingProject && (
+        <ProjectForm
+          initialData={editingProject}
+          onSubmit={(data) => handleUpdateProject(editingProject.id, data)}
+        />
+      )}
       <div>
         <table>
           <tr>
@@ -67,11 +86,21 @@ const ProjectPage = () => {
               <td>{p.end_date}</td>
               <td>{p.owner}</td>
               <td>
-                <button onClick={() => navigate(`/projects/${p.id}`)}>V</button>
-                {/**disabled={!can("PROJECT", "READ")} */}
-                <button>E</button> {/**disabled={!can("PROJECT", "UPDATE")} */}
-                <button onClick={() => deleteProject()}>D</button>
-                {/**disabled={!can("PROJECT", "DELETE")}*/}
+                <button onClick={() => navigate(`/projects/${p.id}`)}>
+                  Open
+                </button>
+
+                {can("PROJECT", "UPDATE") && (
+                  <button onClick={() => setEditingProject(p)}>
+                    Edit
+                  </button>
+                )}
+
+                {can("PROJECT", "DELETE") && (
+                  <button onClick={() => handleDeleteProject(p.id)}>
+                    Delete
+                  </button>
+                )}
               </td>
             </tr>
           ))}
