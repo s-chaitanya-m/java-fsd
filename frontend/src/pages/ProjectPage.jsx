@@ -5,7 +5,7 @@ import usePermission from "../hooks/usePermission";
 import {
   createProject,
   deleteProject,
-  getProject,
+  // getProject,
   getProjects,
   updateProject,
 } from "../api/projects";
@@ -54,7 +54,6 @@ const ProjectPage = () => {
     await deleteProject(id);
     fetchProjects();
   };
-  console.log(editingProject);
 
   return (
     <>

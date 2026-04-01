@@ -11,8 +11,16 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        margin: "auto",
+        border: "1px solid",
+        padding: "8px",
+      }}
+    >
+      {/* <input
         placeholder="Email"
         onChange={(e) => setForm({ ...form, email: e.target.value })}
       />
@@ -21,7 +29,7 @@ const Login = () => {
         placeholder="Password"
         onChange={(e) => setForm({ ...form, password: e.target.value })}
       />
-      <button type="submit">Login</button>
+      <button type="submit">Login</button> */}
 
       <a href={import.meta.env.VITE_BACKEND_URL + "/oauth2/authorize/google"}>
         Login with Google

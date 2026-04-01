@@ -30,8 +30,6 @@ function Home() {
   const { can } = usePermission();
   return (
     <div>
-      <h1>Welcome {user?.name}</h1>
-      <button onClick={() => logout()}>Logout</button>
       <h2>Tasks</h2>
       <table>
         <tr>
