@@ -33,7 +33,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                                 .build()
                 ));
         try {
-            response.sendRedirect("https://d2xv635dtqzf33.cloudfront.net");
+            response.sendRedirect("http://localhost:5173");
         } catch (Exception e) {
             e.printStackTrace();
         }
