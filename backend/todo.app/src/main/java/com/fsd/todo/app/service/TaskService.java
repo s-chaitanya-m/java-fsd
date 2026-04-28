@@ -29,6 +29,13 @@ public class TaskService {
                 .toList();
     }
 
+    public List<TaskResponse> getMyTasks(User user) {
+        return taskRepository.findByOwnerId(user.getId())
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
     public TaskResponse create(TaskRequest req, User creator) {
 
         Project project = projectRepository.findById(req.getProjectId())
@@ -52,6 +59,24 @@ public class TaskService {
         Task task = taskRepository.findById(id).orElseThrow();
         task.setStatus(status);
         return toResponse(taskRepository.save(task));
+    }
+
+    public TaskResponse update(Long id, TaskRequest req) {
+        Task task = taskRepository.findById(id).orElseThrow();
+
+        task.setDescription(req.getDescription());
+        task.setDueDate(req.getDueDate());
+
+        if (req.getOwnerId() != null) {
+            User owner = userRepository.findById(req.getOwnerId()).orElseThrow();
+            task.setOwner(owner);
+        }
+
+        return toResponse(taskRepository.save(task));
+    }
+
+    public void delete(Long id) {
+        taskRepository.deleteById(id);
     }
 
     private TaskResponse toResponse(Task t) {

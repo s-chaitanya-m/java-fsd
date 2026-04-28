@@ -25,6 +25,12 @@ public class ProjectController {
         return projectService.getAll();
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR', 'VIEWER')")
+    public ProjectResponse getProjects(@PathVariable Long id) {
+        return projectService.getProjectbyId(id);
+    }
+
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
     public ProjectResponse createProject(
@@ -33,5 +39,20 @@ public class ProjectController {
     ) {
         User user = principal.getUser();
         return projectService.create(request, user);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    public ProjectResponse updateProject(
+            @PathVariable Long id,
+            @RequestBody ProjectRequest request
+    ) {
+        return projectService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteProject(@PathVariable Long id) {
+        projectService.delete(id);
     }
 }

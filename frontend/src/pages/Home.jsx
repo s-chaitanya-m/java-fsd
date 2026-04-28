@@ -15,8 +15,8 @@ function Home() {
 
   const fetchTasks = async () => {
     try {
-      const data = await getUserTasks();
-      setTasks(data);
+      const res = await getUserTasks();
+      setTasks(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -30,8 +30,6 @@ function Home() {
   const { can } = usePermission();
   return (
     <div>
-      <h1>Welcome {user?.name}</h1>
-      <button onClick={() => logout()}>Logout</button>
       <h2>Tasks</h2>
       <table>
         <tr>
@@ -41,28 +39,18 @@ function Home() {
         </tr>
         {tasks.map((t) => (
           <tr key={t.id}>
-            <td>{t.name}</td>
-            <td>{t.due_on}</td>
+            <td>{t.description}</td>
+            <td>{t.dueDate}</td>
             <td>{t.status}</td>
             <td>
-              <button
-                onClick={() => getTask(t.id)}
-                disabled={!can("TASK", "READ")}
-              >
-                V
-              </button>
-              <button
-                onClick={() => updateTaskStatus(t.id, "COMPLETED")}
-                disabled={!can("TASK", "UPDATE")}
-              >
-                E
-              </button>
-              <button
-                onClick={() => deleteTask(t.id)}
-                disabled={!can("TASK", "DELETE")}
-              >
-                D
-              </button>
+              {can("TASK", "COMPLETE") && t.status !== "COMPLETED" && (
+                <button onClick={() => updateTaskStatus(t.id, "COMPLETED")}>
+                  Mark Complete
+                </button>
+              )}
+              {can("TASK", "DELETE") && (
+                <button onClick={() => deleteTask(t.id)}>D</button>
+              )}
             </td>
           </tr>
         ))}

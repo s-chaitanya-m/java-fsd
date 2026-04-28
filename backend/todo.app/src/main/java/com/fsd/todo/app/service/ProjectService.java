@@ -22,8 +22,11 @@ public class ProjectService {
                 .toList();
     }
 
-    public ProjectResponse create(ProjectRequest request, User user) {
+    public ProjectResponse getProjectbyId(Long id) {
+        return toResponse(projectRepository.findById(id).orElseThrow());
+    }
 
+    public ProjectResponse create(ProjectRequest request, User user) {
         Project project = Project.builder()
                 .name(request.getName())
                 .description(request.getDescription())
@@ -33,6 +36,22 @@ public class ProjectService {
                 .build();
 
         return toResponse(projectRepository.save(project));
+    }
+
+    public ProjectResponse update(Long id, ProjectRequest request) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow();
+
+        project.setName(request.getName());
+        project.setDescription(request.getDescription());
+        project.setStartDate(request.getStartDate());
+        project.setEndDate(request.getEndDate());
+
+        return toResponse(projectRepository.save(project));
+    }
+
+    public void delete(Long id) {
+        projectRepository.deleteById(id);
     }
 
     private ProjectResponse toResponse(Project p) {

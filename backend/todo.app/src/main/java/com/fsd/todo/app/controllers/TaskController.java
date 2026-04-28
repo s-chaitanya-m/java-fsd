@@ -20,6 +20,16 @@ public class TaskController {
 
     private final TaskService taskService;
 
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public List<TaskResponse> getMyTasks(
+            @AuthenticationPrincipal CustomUserPrincipal principal
+    ) {
+        User user = principal.getUser();
+        return taskService.getMyTasks(user);
+    }
+
+
     @GetMapping("/project/{projectId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR', 'VIEWER')")
     public List<TaskResponse> getTasks(@PathVariable Long projectId) {
@@ -43,5 +53,20 @@ public class TaskController {
             @RequestParam TaskStatus status
     ) {
         return taskService.updateStatus(id, status);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    public TaskResponse updateTask(
+            @PathVariable Long id,
+            @RequestBody TaskRequest request
+    ) {
+        return taskService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CREATOR')")
+    public void deleteTask(@PathVariable Long id) {
+        taskService.delete(id);
     }
 }

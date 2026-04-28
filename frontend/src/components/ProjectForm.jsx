@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { emptyProjectForm } from "../constants/helpers";
 
-const ProjectForm = ({ onSubmit }) => {
-  const [form, setForm] = useState(emptyProjectForm);
+const ProjectForm = ({ onSubmit, initialData = emptyProjectForm }) => {
+  const [form, setForm] = useState(initialData);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));

@@ -4,9 +4,14 @@ import Home from "../pages/Home";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import ProjectPage from "../pages/ProjectPage";
 import ProjectDetails from "../pages/ProjectDetails";
+import AdminRoute from "../auth/AdminRoute";
+import AdminPanel from "../pages/AdminPanel";
+import UserPage from "../pages/UserPage";
+import Navbar from "../components/Navbar";
 
 const AppRoutes = () => (
   <BrowserRouter>
+  <Navbar/>
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route
@@ -26,10 +31,28 @@ const AppRoutes = () => (
         }
       />
       <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <UserPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/projects/:projectId"
         element={
           <ProtectedRoute>
             <ProjectDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminRoute>
+              <AdminPanel />
+            </AdminRoute>
           </ProtectedRoute>
         }
       />
