@@ -33,7 +33,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                                 .build()
                 ));
         try {
-            response.sendRedirect("http://localhost:5173");
+            response.sendRedirect("http://32.193.245.84");
         } catch (Exception e) {
             e.printStackTrace();
         }
