@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 
@@ -18,6 +19,9 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final UserRepository userRepository;
+
+    @Value("${app.frontend.redirect-uri}")
+    private String fe_redirect;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -33,7 +37,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                                 .build()
                 ));
         try {
-            response.sendRedirect("http://32.193.245.84");
+            response.sendRedirect(fe_redirect);
         } catch (Exception e) {
             e.printStackTrace();
         }

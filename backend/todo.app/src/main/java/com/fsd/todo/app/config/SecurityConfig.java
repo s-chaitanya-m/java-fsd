@@ -7,6 +7,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.beans.factory.annotation.Value
 
 import java.util.List;
 
@@ -14,13 +15,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
+
+    @Value("${app.frontend.redirect-uri}")
+    private String fe_redirect;
+    
+    @Value("${app.frontend.host-ip}")
+    private String fe_host;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     var config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5173", "http://32.193.245.84"));
+                    config.setAllowedOrigins(List.of("http://localhost:5173", fe_host));
                     config.setAllowedMethods(List.of("*"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
@@ -33,7 +41,7 @@ public class SecurityConfig {
                 .oauth2Login( oauth -> oauth
                                 .userInfoEndpoint(userInfo -> userInfo
                                         .userService(customOAuth2UserService))
-                        .defaultSuccessUrl("http://32.193.245.84", true)
+                        .defaultSuccessUrl(fe_redirect, true)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")

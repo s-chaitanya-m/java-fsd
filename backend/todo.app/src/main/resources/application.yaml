@@ -1,6 +1,11 @@
 server:
+  forward-headers-strategy: framework
   port: 8080
 
+app:
+  frontend:
+    host-ip: ${AWS_FE_HOST_IP}
+    redirect-uri: ${FE_REDIRECT_URL}
 spring:
   application.name: todo.app
   datasource:
@@ -20,6 +25,7 @@ spring:
       client:
         registration:
           google:
+            redirect-uri: ${GOOGLE_REDIRECT_URL}
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope:
