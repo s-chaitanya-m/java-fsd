@@ -7,7 +7,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
