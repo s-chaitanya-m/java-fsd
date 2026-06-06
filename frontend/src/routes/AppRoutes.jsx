@@ -11,52 +11,57 @@ import Navbar from "../components/Navbar";
 
 const AppRoutes = () => (
   <BrowserRouter>
-  <Navbar/>
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/projects"
-        element={
-          <ProtectedRoute>
-            <ProjectPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/users"
-        element={
-          <ProtectedRoute>
-            <UserPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/projects/:projectId"
-        element={
-          <ProtectedRoute>
-            <ProjectDetails />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute>
-            <AdminRoute>
-              <AdminPanel />
-            </AdminRoute>
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+    <div className="min-h-screen bg-slate-50">
+
+      <Navbar />
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <ProtectedRoute>
+                <ProjectPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute>
+                <UserPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:projectId"
+            element={
+              <ProtectedRoute>
+                <ProjectDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminRoute>
+                  <AdminPanel />
+                </AdminRoute>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </main>
+    </div>
   </BrowserRouter>
 );
 

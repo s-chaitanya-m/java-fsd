@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { emptyTaskForm } from "../constants/helpers";
 import { getUsers } from "../api/users";
 
-const TaskForm = ({ onSubmit, initialData=emptyTaskForm }) => {
+const TaskForm = ({
+  onSubmit,
+  initialData = emptyTaskForm,
+}) => {
   const [form, setForm] = useState(initialData);
-
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {
@@ -17,14 +19,15 @@ const TaskForm = ({ onSubmit, initialData=emptyTaskForm }) => {
   }, []);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     onSubmit({
       ...form,
       ownerId: Number(form.ownerId),
@@ -32,26 +35,71 @@ const TaskForm = ({ onSubmit, initialData=emptyTaskForm }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        name="description"
-        placeholder="Task Description"
-        onChange={handleChange}
-      />
+    <form onSubmit={handleSubmit} className="space-y-5">
+      {/* Description */}
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Task Description
+        </label>
 
-      <input type="date" name="dueDate" onChange={handleChange} />
+        <textarea
+          name="description"
+          value={form.description || ""}
+          onChange={handleChange}
+          placeholder="Describe the task..."
+          rows={4}
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
+          required
+        />
+      </div>
 
-      {/* ✅ User Dropdown */}
-      <select name="ownerId" onChange={handleChange}>
-        <option value="">Select User</option>
-        {users.map((u) => (
-          <option key={u.id} value={u.id}>
-            {u.name} ({u.email})
-          </option>
-        ))}
-      </select>
+      {/* Due Date */}
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Due Date
+        </label>
 
-      <button type="submit">Create Task</button>
+        <input
+          type="date"
+          name="dueDate"
+          value={form.dueDate || ""}
+          onChange={handleChange}
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        />
+      </div>
+
+      {/* Assignee */}
+      <div>
+        <label className="block text-sm font-medium text-slate-700 mb-2">
+          Assign To
+        </label>
+
+        <select
+          name="ownerId"
+          value={form.ownerId || ""}
+          onChange={handleChange}
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          required
+        >
+          <option value="">Select User</option>
+
+          {users.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.name} ({user.email})
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Submit */}
+      <div>
+        <button
+          type="submit"
+          className="w-full md:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition"
+        >
+          {initialData?.id ? "Update Task" : "Create Task"}
+        </button>
+      </div>
     </form>
   );
 };
