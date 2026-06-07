@@ -10,6 +10,7 @@ import {
 import TaskForm from "../components/TaskForm";
 import usePermission from "../hooks/usePermission";
 import { getProject } from "../api/projects";
+import Modal from "../components/Modal";
 
 const ProjectDetails = () => {
   const { projectId } = useParams();
@@ -103,23 +104,36 @@ const ProjectDetails = () => {
       </div>
 
       {/* Create Form */}
-      {showForm && (
-        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mb-6">
-          <TaskForm onSubmit={handleCreate} />
-        </div>
-      )}
+      <Modal
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
+        title="Create Task"
+      >
+        <TaskForm
+          onSubmit={async (data) => {
+            await handleCreate(data);
+            setShowForm(false);
+          }}
+        />
+      </Modal>
 
       {/* Edit Form */}
-      {editingTask && (
-        <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mb-6">
-          <TaskForm
-            initialData={editingTask}
-            onSubmit={(data) =>
-              handleUpdateTask(editingTask.id, data)
-            }
-          />
-        </div>
-      )}
+      <Modal
+        isOpen={!!editingTask}
+        onClose={() => setEditingTask(null)}
+        title="Edit Task"
+      >
+        <TaskForm
+          initialData={editingTask}
+          onSubmit={async (data) => {
+            await handleUpdateTask(
+              editingTask.id,
+              data
+            );
+            setEditingTask(null);
+          }}
+        />
+      </Modal>
 
       {/* Empty State */}
       {tasks.length === 0 ? (

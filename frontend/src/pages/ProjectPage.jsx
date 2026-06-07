@@ -11,6 +11,7 @@ import {
 } from "../api/projects";
 import ProjectForm from "../components/ProjectForm";
 import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
 
 const ProjectPage = () => {
   const [projects, setProjects] = useState([]);
@@ -79,22 +80,35 @@ const ProjectPage = () => {
       </div>
 
       {/* Forms */}
-      {showForm && (
-        <div className="mb-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <ProjectForm onSubmit={handleCreate} />
-        </div>
-      )}
+      <Modal
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
+        title="Create Project"
+      >
+        <ProjectForm
+          onSubmit={async (data) => {
+            await handleCreate(data);
+            setShowForm(false);
+          }}
+        />
+      </Modal>
 
-      {editingProject && (
-        <div className="mb-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <ProjectForm
-            initialData={editingProject}
-            onSubmit={(data) =>
-              handleUpdateProject(editingProject.id, data)
-            }
-          />
-        </div>
-      )}
+      <Modal
+        isOpen={!!editingProject}
+        onClose={() => setEditingProject(null)}
+        title="Edit Project"
+      >
+        <ProjectForm
+          initialData={editingProject}
+          onSubmit={async (data) => {
+            await handleUpdateProject(
+              editingProject.id,
+              data
+            );
+            setEditingProject(null);
+          }}
+        />
+      </Modal>
 
       {/* Empty State */}
       {projects.length === 0 ? (
